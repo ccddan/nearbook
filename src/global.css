@@ -1,5 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Cousine:ital,wght@0,400;0,700;1,400&family=Nunito+Sans:wght@200&display=swap');
+
+.color-bg {
+  color: #efefef;
+}
+.color-fg {
+  color: #1e1e1e;
+}
+.color-gray {
+  color: #555;
+}
+.color-light {
+  color: #ccc;
+}
+.color-shadow {
+  color: #e6e6e6;
+}
+.color-success {
+  color: rgb(90, 206, 132);
+}
+.color-primary {
+  color: #FF585D;
+}
+.color-secondary {
+  color: #0072CE;
+}
+
+.nearbook-title-login span {
+  display: block;
+  font-size: 15px;
+  text-align: right;
+  margin-right: 22%;
+  margin-top: -13px
+}
+
+.principal-font {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.secondary-font {
+  font-family: 'Cousine', monospace;
+}
+
+.logo-font {
+  font-family: 'Audiowide', cursive;
+}
+
 * {
   box-sizing: border-box;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 html {
@@ -14,7 +63,7 @@ html {
 
   background-color: var(--bg);
   color: var(--fg);
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  /* font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif; */
   font-size: calc(0.9em + 0.5vw);
   line-height: 1.3;
 }
@@ -30,12 +79,12 @@ main {
 }
 
 h1 {
-  background-image: url(assets/logo-black.svg);
+  /* background-image: url(assets/logo-black.svg); */
   background-position: center 1em;
   background-repeat: no-repeat;
   background-size: auto 1.5em;
   margin-top: 0;
-  padding: 3.5em 0 0.5em;
+  padding: 2.5em 0 0.5em;
   text-align: center;
 }
 
@@ -178,9 +227,6 @@ aside footer *:last-child {
     --gray: #aaa;
     --shadow: #2a2a2a;
     --light-gray: #444;
-  }
-  h1 {
-    background-image: url(assets/logo-white.svg);
   }
   input:focus {
     box-shadow: 0 0 10em rgba(255, 255, 255, 0.02) inset;
