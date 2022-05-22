@@ -1,26 +1,19 @@
-nearbook Smart Contract
-==================
+# NEARBook - Social Media Platform - Smart Contracts
 
-A [smart contract] written in [AssemblyScript] for an app initialized with [create-near-app]
+Smart contracts for the unstoppable, censorship resistance and decentralized social media platform, NEARBook.
 
-
-Quick Start
-===========
+# Quick Start
 
 Before you compile this code, you will need to install [Node.js] ≥ 12
 
+# Exploring The Code
 
-Exploring The Code
-==================
-
-1. The main smart contract code lives in `assembly/index.ts`. You can compile
+1. The main [smart contract] code lives in `assembly/index.ts`. You can compile
    it with the `./compile` script.
 2. Tests: You can run smart contract tests with the `./test` script. This runs
-   standard AssemblyScript tests using [as-pect].
+   standard [AssemblyScript] tests using [as-pect].
 
-
-  [smart contract]: https://docs.near.org/docs/develop/contracts/overview
-  [AssemblyScript]: https://www.assemblyscript.org/
-  [create-near-app]: https://github.com/near/create-near-app
-  [Node.js]: https://nodejs.org/en/download/package-manager/
-  [as-pect]: https://www.npmjs.com/package/@as-pect/cli
+[smart contract]: https://docs.near.org/docs/develop/contracts/overview
+[assemblyscript]: https://www.assemblyscript.org/
+[node.js]: https://nodejs.org/en/download/package-manager/
+[as-pect]: https://www.npmjs.com/package/@as-pect/cli
