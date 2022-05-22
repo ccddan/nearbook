@@ -1,7 +1,15 @@
 {
   "name": "nearbook",
   "version": "0.1.0",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "author": {
+    "name": "ccddan",
+    "email": "ccdd.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccddan/nearbook.git"
+  },
   "scripts": {
     "build": "npm run build:contract && npm run build:web",
     "build:contract": "node contract/compile.js",

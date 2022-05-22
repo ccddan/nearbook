@@ -1,8 +1,16 @@
 {
-  "name": "greeter",
+  "name": "nearbook-contracts",
   "version": "0.0.1",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
+  "author": {
+    "name": "ccddan",
+    "email": "ccdd.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccddan/nearbook.git"
+  },
   "scripts": {
     "build": "asb",
     "build:debug": "asb --target debug",
