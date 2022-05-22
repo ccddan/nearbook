@@ -1,6 +1,6 @@
 # NEARBook - Social Media Platform - Smart Contracts
 
-Smart contracts for the unstoppable, censorship resistance and decentralized social media platform, NEARBook.
+Smart contracts for the unstoppable, censorship resistant and decentralized social media platform, NEARBook.
 
 # Quick Start
 

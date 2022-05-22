@@ -1,6 +1,6 @@
 # NEARBook - Social Media Platform
 
-The unstoppable, censorship resistance and decentralized social media platform. As it should has been since the beginning.
+The unstoppable, censorship resistant and decentralized social media platform. As it had to have been since the beginning.
 
 # Quick Start
 
