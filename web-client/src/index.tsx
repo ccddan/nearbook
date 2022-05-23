@@ -1,12 +1,19 @@
 import App from "./App";
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { initContract } from "./utils";
 
 let window: any = Window;
 
 window.nearInitPromise = initContract()
   .then(() => {
-    ReactDOM.render(<App />, document.querySelector("#root"));
+    const root = ReactDOM.createRoot(
+      document.getElementById("root") as HTMLElement
+    );
+    root.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    );
   })
   .catch(console.error);

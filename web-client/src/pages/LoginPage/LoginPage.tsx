@@ -1,10 +1,40 @@
 import "./LoginPage.css";
 import "regenerator-runtime/runtime";
 
-import React from "react";
-import { login } from "../../utils";
+import React, { useCallback, useEffect } from "react";
 
-export default function LoginPage() {
+import { login } from "../../utils";
+import { useNavigate } from "react-router-dom";
+
+let window: any = Window;
+
+export function LoginPage() {
+  console.log("LoginPage");
+  const navigate = useNavigate();
+  const checkLoginStatusFn = useCallback(() => {
+    const fn = () => {
+      if (window.walletConnection.isSignedIn()) {
+        console.log("login: already signed in");
+        navigate("/home");
+        return <></>;
+      }
+    };
+
+    fn();
+  }, [navigate]);
+
+  const checkLoginStatus = () => {
+    if (window.walletConnection.isSignedIn()) {
+      console.log("login: already signed in");
+      navigate("/home");
+      return <></>;
+    }
+  };
+
+  useEffect(() => {
+    checkLoginStatusFn();
+  }, [checkLoginStatusFn]);
+
   return (
     <>
       <section className="ocean">
@@ -27,9 +57,18 @@ export default function LoginPage() {
           community!
         </p>
         <p style={{ textAlign: "center", marginTop: "2.5em" }}>
-          <button onClick={login}>Connect Wallet</button>
+          <button
+            onClick={() => {
+              login();
+              checkLoginStatus();
+            }}
+          >
+            Connect Wallet
+          </button>
         </p>
       </main>
     </>
   );
 }
+
+export default LoginPage;
