@@ -48,20 +48,20 @@ export function LoginPage() {
             testnet
           </span>
         </h1>
-        <p style={{ textAlign: "center", marginTop: "2.5em" }}>
+        <p className="text-center mt-10">
           The unstoppable, censorship resistant and decentralized social media
           platform. As it had to have been since the beginning.
         </p>
-        <p style={{ textAlign: "center", marginTop: "2.5em" }}>
+        <p className="text-center mt-10">
           Join the community,{" "}
-          <i style={{ color: "var(--secondary)" }}>
+          <i className="color-secondary">
             <b>YOUR</b>
           </i>{" "}
           community!
         </p>
         <p className="text-center mt-20">
           <button
-            className="btn-primary"
+            className="btn-primary rounded"
             onClick={() => {
               login();
               checkLoginStatus();
