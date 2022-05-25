@@ -27,7 +27,7 @@ export function Home() {
       console.log("home: not signed in");
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <>
@@ -126,9 +126,9 @@ export function Home() {
             </div>
           </fieldset>
         </form>
-        <div style={{ height: "350xp", minHeight: "350px" }}></div>
+        <div className="h-96"></div>
         <hr />
-        <p style={{ textAlign: "center" }}>
+        <p className="content-center">
           Powered by{" "}
           <a target="_blank" rel="noreferrer" href="https://near.org">
             NEAR Blockchain

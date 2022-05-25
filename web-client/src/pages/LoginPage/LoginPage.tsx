@@ -41,9 +41,12 @@ export function LoginPage() {
         <div className="wave1"></div>
         <div className="wave2"></div>
       </section>
-      <main>
-        <h1 className="logo-font nearbook-title-login color-secondary">
-          NEARBook<span className="principal-font">testnet</span>
+      <main className="m-auto pt-[5%] max-w-[25em]">
+        <h1 className="font-logo color-secondary mt-0 text-center text-4xl">
+          NEARBook
+          <span className="font-primary text-[16px] font-bold text-right mr-[22%] -mt-[22px] italic block">
+            testnet
+          </span>
         </h1>
         <p style={{ textAlign: "center", marginTop: "2.5em" }}>
           The unstoppable, censorship resistant and decentralized social media
@@ -56,8 +59,9 @@ export function LoginPage() {
           </i>{" "}
           community!
         </p>
-        <p style={{ textAlign: "center", marginTop: "2.5em" }}>
+        <p className="text-center mt-20">
           <button
+            className="btn-primary"
             onClick={() => {
               login();
               checkLoginStatus();
