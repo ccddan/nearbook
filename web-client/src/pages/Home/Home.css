@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a,
+.link {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover,
+a:focus,
+.link:hover,
+.link:focus {
+  text-decoration: underline;
+}
+a:active,
+.link:active {
+  color: var(--secondary);
+}
+
+fieldset {
+  border: none;
+  padding: 2em 0;
+}
+
+input {
+  background-color: var(--shadow);
+  border: none;
+  border-radius: 5px 0 0 5px;
+  caret-color: var(--primary);
+  color: inherit;
+  padding: 0.25em 1em;
+}
+input::selection {
+  background-color: var(--secondary);
+  color: #efefef;
+}
+input:focus {
+  box-shadow: 0 0 10em rgba(0, 0, 0, 0.02) inset;
+}
+
+code {
+  color: var(--gray);
+}
+
+li {
+  padding-bottom: 1em;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --bg: #1e1e1e;
+    --fg: #efefef;
+    --gray: #aaa;
+    --shadow: #2a2a2a;
+    --light-gray: #444;
+  }
+  input:focus {
+    box-shadow: 0 0 10em rgba(255, 255, 255, 0.02) inset;
+  }
+}
+
+button, input {
+  font: inherit;
+  outline: none;
+}

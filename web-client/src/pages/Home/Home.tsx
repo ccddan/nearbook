@@ -1,3 +1,4 @@
+import "./Home.css";
 import "regenerator-runtime/runtime";
 
 import React, { useEffect, useState } from "react";
@@ -29,11 +30,53 @@ export function Home() {
     }
   }, [navigate]);
 
+  const onSubmitHandler = async (event: any) => {
+    event.preventDefault();
+
+    // get elements from the form using their id attribute
+    const { fieldset, greeting } = event.target.elements;
+
+    // hold onto new user-entered value from React's SynthenticEvent for use after `await` call
+    const newGreeting = greeting.value;
+
+    // disable the form while the value gets updated on-chain
+    fieldset.disabled = true;
+
+    try {
+      // make an update call to the smart contract
+      await window.contract.setGreeting({
+        // pass the value that the user entered in the greeting field
+        message: newGreeting,
+      });
+    } catch (e) {
+      alert(
+        "Something went wrong! " +
+          "Maybe you need to sign out and back in? " +
+          "Check your browser console for more info."
+      );
+      throw e;
+    } finally {
+      // re-enable the form, whether the call succeeded or failed
+      fieldset.disabled = false;
+    }
+
+    // update local `greeting` variable to match persisted value
+    setGreeting(newGreeting);
+
+    // show Notification
+    setShowNotification(true);
+
+    // remove Notification again after css animation completes
+    // this allows it to be shown again next time the form is submitted
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 11000);
+  };
+
   return (
-    <>
+    <div className="mt-5">
       <button
-        className="link"
-        style={{ float: "right" }}
+        className="btn-primary link float-right"
         onClick={() => {
           logout();
           navigate("/");
@@ -41,92 +84,36 @@ export function Home() {
       >
         Sign out
       </button>
-      <main>
+      <main className="m-auto max-w-[25em]">
         <h1>
-          <label
-            htmlFor="greeting"
-            style={{
-              color: "var(--secondary)",
-              borderBottom: "2px solid var(--secondary)",
-            }}
-          >
+          <label htmlFor="greeting" className="color-secondary underline">
             {greeting}
           </label>{" "}
           {window.accountId}!
         </h1>
-        <form
-          onSubmit={async (event: any) => {
-            event.preventDefault();
-
-            // get elements from the form using their id attribute
-            const { fieldset, greeting } = event.target.elements;
-
-            // hold onto new user-entered value from React's SynthenticEvent for use after `await` call
-            const newGreeting = greeting.value;
-
-            // disable the form while the value gets updated on-chain
-            fieldset.disabled = true;
-
-            try {
-              // make an update call to the smart contract
-              await window.contract.setGreeting({
-                // pass the value that the user entered in the greeting field
-                message: newGreeting,
-              });
-            } catch (e) {
-              alert(
-                "Something went wrong! " +
-                  "Maybe you need to sign out and back in? " +
-                  "Check your browser console for more info."
-              );
-              throw e;
-            } finally {
-              // re-enable the form, whether the call succeeded or failed
-              fieldset.disabled = false;
-            }
-
-            // update local `greeting` variable to match persisted value
-            setGreeting(newGreeting);
-
-            // show Notification
-            setShowNotification(true);
-
-            // remove Notification again after css animation completes
-            // this allows it to be shown again next time the form is submitted
-            setTimeout(() => {
-              setShowNotification(false);
-            }, 11000);
-          }}
-        >
+        <form className="text-center mt-10" onSubmit={onSubmitHandler}>
           <fieldset id="fieldset">
-            <label
-              htmlFor="greeting"
-              style={{
-                display: "block",
-                color: "var(--gray)",
-                marginBottom: "0.5em",
-              }}
-            >
+            <label htmlFor="greeting" className="block color-gray mb-2">
               Change greeting
             </label>
-            <div style={{ display: "flex" }}>
+            <div className="flex">
               <input
                 autoComplete="off"
                 defaultValue={greeting}
                 id="greeting"
-                onChange={(e) => setButtonDisabled(e.target.value === greeting)}
-                style={{ flex: 1 }}
+                onChange={(e) => setButtonDisabled(e.target.value == greeting)}
+                className="flex-1"
               />
               <button
+                className="btn-primary btn-submit rounded-r-lg min-w-20 max-w-20 w-20"
                 disabled={buttonDisabled}
-                style={{ borderRadius: "0 5px 5px 0" }}
               >
                 Save
               </button>
             </div>
           </fieldset>
         </form>
-        <div className="h-96"></div>
+        <div className="h-80"></div>
         <hr />
         <p className="content-center">
           Powered by{" "}
@@ -136,7 +123,7 @@ export function Home() {
         </p>
       </main>
       {showNotification && <Notification />}
-    </>
+    </div>
   );
 }
 
