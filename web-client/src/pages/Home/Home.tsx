@@ -1,53 +1,35 @@
 import "regenerator-runtime/runtime";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import getConfig from "./../../config";
+import { Notification } from "../../components/Notification";
 import { logout } from "./../../utils";
 import { useNavigate } from "react-router-dom";
 
 let window: any = Window;
-const { networkId } = getConfig(process.env.NODE_ENV || "development");
 
 export function Home() {
   console.log("Home");
   const navigate = useNavigate();
 
-  // use React Hooks to store greeting in component state
   const [greeting, setGreeting] = useState("");
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [showNotification, setShowNotification] = useState(false);
 
-  // when the user has not yet interacted with the form, disable the button
-  const [buttonDisabled, setButtonDisabled] = React.useState(true);
-
-  // after submitting the form, we want to show Notification
-  const [showNotification, setShowNotification] = React.useState(false);
-
-  // The useEffect hook can be used to fire side-effects during render
-  // Learn more: https://reactjs.org/docs/hooks-intro.html
-  React.useEffect(
-    () => {
-      // in this case, we only care to query the contract when signed in
-      if (window.walletConnection.isSignedIn()) {
-        // window.contract is set by initContract in index.js
-        window.contract
-          .getGreeting({ accountId: window.accountId })
-          .then((greetingFromContract: string) => {
-            setGreeting(greetingFromContract);
-          });
-      } else {
-        console.log("home: not signed in");
-        navigate("/");
-      }
-    },
-
-    // The second argument to useEffect tells React when to re-run the effect
-    // Use an empty array to specify "only run on first render"
-    // This works because signing into NEAR Wallet reloads the page
-    []
-  );
+  useEffect(() => {
+    if (window.walletConnection.isSignedIn()) {
+      window.contract
+        .getGreeting({ accountId: window.accountId })
+        .then((greetingFromContract: string) => {
+          setGreeting(greetingFromContract);
+        });
+    } else {
+      console.log("home: not signed in");
+      navigate("/");
+    }
+  }, []);
 
   return (
-    // use React Fragment, <>, to avoid wrapping elements in unnecessary divs
     <>
       <button
         className="link"
@@ -69,10 +51,7 @@ export function Home() {
             }}
           >
             {greeting}
-          </label>
-          {
-            " " /* React trims whitespace around tags; insert literal space character when needed */
-          }
+          </label>{" "}
           {window.accountId}!
         </h1>
         <form
@@ -147,82 +126,17 @@ export function Home() {
             </div>
           </fieldset>
         </form>
-        <p>
-          Look at that! A Hello World app! This greeting is stored on the NEAR
-          blockchain. Check it out:
-        </p>
-        <ol>
-          <li>
-            Look in <code>src/App.js</code> and <code>src/utils.js</code> –
-            you'll see <code>getGreeting</code> and <code>setGreeting</code>{" "}
-            being called on <code>contract</code>. What's this?
-          </li>
-          <li>
-            Ultimately, this <code>contract</code> code is defined in{" "}
-            <code>assembly/main.ts</code> – this is the source code for your{" "}
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://docs.near.org/docs/develop/contracts/overview"
-            >
-              smart contract
-            </a>
-            .
-          </li>
-          <li>
-            When you run <code>yarn dev</code>, the code in{" "}
-            <code>assembly/main.ts</code> gets deployed to the NEAR testnet. You
-            can see how this happens by looking in <code>package.json</code> at
-            the <code>scripts</code> section to find the <code>dev</code>{" "}
-            command.
-          </li>
-        </ol>
+        <div style={{ height: "350xp", minHeight: "350px" }}></div>
         <hr />
-        <p>
-          To keep learning, check out{" "}
-          <a target="_blank" rel="noreferrer" href="https://docs.near.org">
-            the NEAR docs
-          </a>{" "}
-          or look through some{" "}
-          <a target="_blank" rel="noreferrer" href="https://examples.near.org">
-            example apps
+        <p style={{ textAlign: "center" }}>
+          Powered by{" "}
+          <a target="_blank" rel="noreferrer" href="https://near.org">
+            NEAR Blockchain
           </a>
-          .
         </p>
       </main>
       {showNotification && <Notification />}
     </>
-  );
-}
-
-// this component gets rendered by App after the form is submitted
-function Notification() {
-  const urlPrefix = `https://explorer.${networkId}.near.org/accounts`;
-  return (
-    <aside>
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href={`${urlPrefix}/${window.accountId}`}
-      >
-        {window.accountId}
-      </a>
-      {
-        " " /* React trims whitespace around tags; insert literal space character when needed */
-      }
-      called method: 'setGreeting' in contract:{" "}
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href={`${urlPrefix}/${window.contract.contractId}`}
-      >
-        {window.contract.contractId}
-      </a>
-      <footer>
-        <div>✔ Succeeded</div>
-        <div>Just now</div>
-      </footer>
-    </aside>
   );
 }
 
