@@ -42,7 +42,7 @@ export function LoginPage() {
         <div className="wave2"></div>
       </section>
       <main className="m-auto pt-[5%] max-w-[25em]">
-        <h1 className="font-logo color-secondary mt-0 text-center text-4xl">
+        <h1 className="font-logo color-primary mt-0 text-center text-4xl">
           NEARBook
           <span className="font-primary text-[16px] font-bold text-right mr-[22%] -mt-[22px] italic block">
             testnet
@@ -54,14 +54,14 @@ export function LoginPage() {
         </p>
         <p className="text-center mt-10">
           Join the community,{" "}
-          <i className="color-secondary">
+          <i className="color-primary">
             <b>YOUR</b>
           </i>{" "}
           community!
         </p>
         <p className="text-center mt-20">
           <button
-            className="btn-primary rounded"
+            className="btn btn-secondary rounded"
             onClick={() => {
               login();
               checkLoginStatus();
