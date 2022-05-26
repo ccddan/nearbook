@@ -3,6 +3,7 @@ import "regenerator-runtime/runtime";
 
 import React, { useEffect, useState } from "react";
 
+import { Navbar } from "../../components/Navbar";
 import { Notification } from "../../components/Notification";
 import { logout } from "./../../utils";
 import { useNavigate } from "react-router-dom";
@@ -72,58 +73,61 @@ export function Home() {
       setShowNotification(false);
     }, 11000);
   };
+  const onLogoutHandler = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
-    <div className="mt-5">
-      <button
-        className="btn-primary link float-right"
-        onClick={() => {
-          logout();
-          navigate("/");
-        }}
-      >
-        Sign out
-      </button>
-      <main className="m-auto max-w-[25em]">
-        <h1>
-          <label htmlFor="greeting" className="color-secondary underline">
-            {greeting}
-          </label>{" "}
-          {window.accountId}!
-        </h1>
-        <form className="text-center mt-10" onSubmit={onSubmitHandler}>
-          <fieldset id="fieldset">
-            <label htmlFor="greeting" className="block color-gray mb-2">
-              Change greeting
+    <>
+      <Navbar onLogout={onLogoutHandler} />
+      <div className="mt-5">
+        <main className="m-auto max-w-[25em]">
+          <h1>
+            Greeting:{" "}
+            <label
+              htmlFor="greeting"
+              className="color-secondary underline cursor-pointer"
+            >
+              {greeting}
             </label>
-            <div className="flex">
-              <input
-                autoComplete="off"
-                defaultValue={greeting}
-                id="greeting"
-                onChange={(e) => setButtonDisabled(e.target.value == greeting)}
-                className="flex-1"
-              />
-              <button
-                className="btn-primary btn-submit rounded-r-lg min-w-20 max-w-20 w-20"
-                disabled={buttonDisabled}
-              >
-                Save
-              </button>
-            </div>
-          </fieldset>
-        </form>
-        <div className="h-80"></div>
-        <hr />
-        <p className="content-center">
-          Powered by{" "}
-          <a target="_blank" rel="noreferrer" href="https://near.org">
-            NEAR Blockchain
-          </a>
-        </p>
-      </main>
-      {showNotification && <Notification />}
-    </div>
+          </h1>
+          <form className="text-center mt-10" onSubmit={onSubmitHandler}>
+            <fieldset id="fieldset">
+              <label htmlFor="greeting" className="block color-gray mb-2">
+                Change greeting
+              </label>
+              <div className="flex">
+                <input
+                  autoComplete="off"
+                  defaultValue={greeting}
+                  id="greeting"
+                  onChange={(e) =>
+                    setButtonDisabled(e.target.value == greeting)
+                  }
+                  className="flex-1"
+                />
+                <button
+                  className="btn btn-secondary btn-submit rounded-r-lg min-w-20 max-w-20 w-20"
+                  disabled={buttonDisabled}
+                >
+                  Save
+                </button>
+              </div>
+            </fieldset>
+          </form>
+          <div className="h-80"></div>
+          <hr />
+          <p className="content-center">
+            Powered by{" "}
+            <a target="_blank" rel="noreferrer" href="https://near.org">
+              NEAR Blockchain
+            </a>
+          </p>
+        </main>
+        {showNotification && <Notification />}
+      </div>
+    </>
   );
 }
 
