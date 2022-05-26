@@ -1,3 +1,4 @@
+console.log("env vars:", process.env);
 const CONTRACT_NAME = process.env.REACT_APP_CONTRACT_NAME || "nearbook";
 
 function getConfig(env: string) {

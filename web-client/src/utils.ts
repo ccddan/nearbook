@@ -26,8 +26,8 @@ export async function initContract() {
     window.walletConnection.account(),
     nearConfig.contractName,
     {
-      viewMethods: ["getGreeting"],
-      changeMethods: ["setGreeting"],
+      viewMethods: ["listPosts", "getPost", "totalPosts"],
+      changeMethods: ["createPost"],
     }
   );
 }

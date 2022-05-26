@@ -2,9 +2,11 @@ import "./Home.css";
 import "regenerator-runtime/runtime";
 
 import React, { useEffect, useState } from "react";
+import { createPost, listPosts } from "../../nearbook";
 
 import { Navbar } from "../../components/Navbar";
 import { Notification } from "../../components/Notification";
+import { Post } from "./../../../../contract/assembly/models";
 import { logout } from "./../../utils";
 import { useNavigate } from "react-router-dom";
 
@@ -20,13 +22,10 @@ export function Home() {
 
   useEffect(() => {
     if (window.walletConnection.isSignedIn()) {
-      window.contract
-        .getGreeting({ accountId: window.accountId })
-        .then((greetingFromContract: string) => {
-          setGreeting(greetingFromContract);
-        });
+      listPosts().then((posts: Post[]) => {
+        console.log("list of posts:", posts);
+      });
     } else {
-      console.log("home: not signed in");
       navigate("/");
     }
   }, [navigate]);
@@ -92,6 +91,17 @@ export function Home() {
               {greeting}
             </label>
           </h1>
+          <div>
+            <button
+              className="btn btn-primary"
+              onClick={async () => {
+                await createPost("Hello world!!");
+                await listPosts();
+              }}
+            >
+              Create New Post
+            </button>
+          </div>
           <form className="text-center mt-10" onSubmit={onSubmitHandler}>
             <fieldset id="fieldset">
               <label htmlFor="greeting" className="block color-gray mb-2">
@@ -103,7 +113,7 @@ export function Home() {
                   defaultValue={greeting}
                   id="greeting"
                   onChange={(e) =>
-                    setButtonDisabled(e.target.value == greeting)
+                    setButtonDisabled(e.target.value === greeting)
                   }
                   className="flex-1"
                 />

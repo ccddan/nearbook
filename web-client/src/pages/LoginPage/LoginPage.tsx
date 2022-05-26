@@ -25,7 +25,6 @@ export function LoginPage() {
 
   const checkLoginStatus = () => {
     if (window.walletConnection.isSignedIn()) {
-      console.log("login: already signed in");
       navigate("/home");
       return <></>;
     }

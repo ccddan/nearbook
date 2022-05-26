@@ -1,0 +1,21 @@
+import { v4 as uuid } from "uuid";
+
+let window: any = Window;
+
+export const createPost = async (content: string) => {
+  console.log("Creating new post...");
+  const payload = {
+    uuid: uuid(),
+    content,
+  };
+  const post = await window.contract.createPost({ payload });
+  console.log("post:", post);
+  return post;
+};
+
+export const listPosts = async (start: number = 0, limit: number = 10) => {
+  console.log("Listing all posts...");
+  const posts = await window.contract.listPosts({ start, limit });
+  console.log("posts:", posts);
+  return posts;
+};
