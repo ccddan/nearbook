@@ -1,34 +1,51 @@
-/*
- * This is an example of an AssemblyScript smart contract with two simple,
- * symmetric functions:
- *
- * 1. setGreeting: accepts a greeting, such as "howdy", and records it for the
- *    user (account_id) who sent the request
- * 2. getGreeting: accepts an account_id and returns the greeting saved for it,
- *    defaulting to "Hello"
- *
- * Learn more about writing NEAR smart contracts with AssemblyScript:
- * https://docs.near.org/docs/develop/contracts/as/intro
- *
- */
+import { Context, context, logging, storage } from "near-sdk-as";
+import { POSTS, POSTS_BY_ACCOUNT_ID, POST_OWNER } from "./store";
+import { Post, PostCreatePayload } from "./models";
 
-import { Context, logging, storage } from 'near-sdk-as'
+export function createPost(payload: PostCreatePayload): Post {
+  let post = new Post(payload);
 
-const DEFAULT_MESSAGE = 'Hello'
+  logging.log("validate if post uuid exists");
+  if (POST_OWNER.get(post.uuid)) {
+    throw new Error("Post already exists");
+  }
 
-// Exported functions will be part of the public interface for your smart contract.
-// Feel free to extract behavior to non-exported functions!
-export function getGreeting(accountId: string): string | null {
-  // This uses raw `storage.get`, a low-level way to interact with on-chain
-  // storage for simple contracts.
-  // If you have something more complex, check out persistent collections:
-  // https://docs.near.org/docs/concepts/data-storage#assemblyscript-collection-types
-  return storage.get<string>(accountId, DEFAULT_MESSAGE)
+  logging.log("storing new post's owner");
+  POST_OWNER.set(post.uuid, context.sender);
+  logging.log("post's owner saved");
+
+  if (!POSTS_BY_ACCOUNT_ID.get(context.sender)) {
+    POSTS_BY_ACCOUNT_ID.set(context.sender, []);
+  }
+
+  logging.log("updating account's posts");
+  const accountPosts = POSTS_BY_ACCOUNT_ID.get(context.sender);
+  accountPosts!.push(post.uuid);
+  POSTS_BY_ACCOUNT_ID.get(context.sender, accountPosts);
+  logging.log("account's posts updated");
+
+  logging.log("storing post");
+  POSTS.set(post.uuid, post);
+  logging.log("post stored");
+
+  return post;
 }
 
-export function setGreeting(message: string): void {
-  const accountId = Context.sender
-  // Use logging.log to record logs permanently to the blockchain!
-  logging.log(`Saving greeting "${message}" for account "${accountId}"`)
-  storage.set(accountId, message)
+export function getPost(uuid: string): Post | null {
+  return POSTS.get(uuid);
+}
+
+export function totalPosts(): u64 {
+  return POSTS.values().length;
+}
+
+export function listPosts(idx: i32 = 0, limit: i32 = 10): Post[] {
+  let result: Post[] = [];
+
+  if (idx < POSTS.length) {
+    let end = idx + limit < POSTS.length ? idx + limit : POSTS.length;
+    return POSTS.values(idx, end);
+  }
+
+  return result;
 }
