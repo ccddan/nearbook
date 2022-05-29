@@ -32,6 +32,8 @@ export class Message {
 export class PostCreatePayload {
   uuid: string;
   content: string;
+  title: string;
+  cover: string;
 }
 
 @nearBindgen
@@ -39,18 +41,22 @@ export class Post {
   uuid: string;
   author: string;
   content: string;
+  title: string;
+  cover: string;
   likes: u64;
   dislikes: u64;
-  totalMessage: u64;
+  totalMessages: u64;
   createdAt: u64;
 
   constructor(payload: PostCreatePayload) {
     this.uuid = payload.uuid;
     this.author = context.sender;
     this.content = payload.content;
+    this.title = payload.title;
+    this.cover = payload.cover;
     this.likes = 0;
     this.dislikes = 0;
-    this.totalMessage = 0;
+    this.totalMessages = 0;
     this.createdAt = context.blockTimestamp;
   }
 }
