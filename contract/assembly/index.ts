@@ -1,6 +1,16 @@
-import { Context, context, logging, storage } from "near-sdk-as";
-import { POSTS, POSTS_BY_ACCOUNT_ID, POST_OWNER } from "./store";
-import { Post, PostCreatePayload } from "./models";
+import {
+  MESSAGES_BY_POST_ID,
+  POSTS,
+  POSTS_BY_ACCOUNT_ID,
+  POST_OWNER,
+} from "./store";
+import {
+  Message,
+  MessageCreatePayload,
+  Post,
+  PostCreatePayload,
+} from "./models";
+import { context, logging } from "near-sdk-as";
 
 export function createPost(payload: PostCreatePayload): Post {
   let post = new Post(payload);
@@ -67,4 +77,37 @@ export function dislikePost(uuid: string): boolean {
   POSTS.set(post.uuid, post);
 
   return true;
+}
+
+export function createMessage(payload: MessageCreatePayload): Message {
+  const post = getPost(payload.post);
+  if (!post) {
+    throw new Error("Post not found");
+  }
+  const message = new Message(payload);
+
+  const postMessages = MESSAGES_BY_POST_ID.get(message.post, []);
+  postMessages!.push(message);
+
+  post.totalMessages = post.totalMessages + 1;
+
+  POSTS.set(post.uuid, post);
+  MESSAGES_BY_POST_ID.set(post.uuid, postMessages!);
+
+  return message;
+}
+
+export function fetchMessages(
+  post: string,
+  idx: i32 = 0,
+  limit: i32 = 10
+): Message[] {
+  let messages: Message[] = MESSAGES_BY_POST_ID.get(post, [])!;
+
+  if (idx < messages.length) {
+    let end = idx + limit < POSTS.length ? idx + limit : POSTS.length;
+    return messages.slice(idx, end);
+  }
+
+  return messages;
 }
