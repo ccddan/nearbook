@@ -132,7 +132,16 @@ export function Home() {
               <span>Loading posts...</span>
             </p>
           )}
-          {!loadingPosts && <PostsList posts={posts} />}
+          {!loadingPosts && !posts.length && (
+            <div className="max-w-xl mx-auto text-center pt-20 text-gray">
+              <h2 className="text-lg font-bold sm:text-3xl">Nothing to show</h2>
+
+              <p className="mx-auto mt-4 text-gray-500">
+                Be the first to create a Post!!
+              </p>
+            </div>
+          )}
+          {!loadingPosts && !!posts.length && <PostsList posts={posts} />}
         </>
       )}
       {/* <div className="mt-5">
