@@ -1,7 +1,13 @@
 console.log("env vars:", process.env);
-const CONTRACT_NAME = process.env.REACT_APP_CONTRACT_NAME || "nearbook";
+const CONTRACT_NAME = process.env.REACT_APP_CONTRACT_NAME;
+
+if (!CONTRACT_NAME) {
+  throw new Error("CONTRACT_NAME env var is required");
+}
 
 function getConfig(env: string) {
+  console.log("Contract Name:", CONTRACT_NAME);
+
   switch (env) {
     case "production":
     case "mainnet":

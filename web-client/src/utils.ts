@@ -24,7 +24,7 @@ export async function initContract() {
 
   window.contract = await new Contract(
     window.walletConnection.account(),
-    nearConfig.contractName,
+    `${nearConfig.contractName}`,
     {
       viewMethods: ["listPosts", "getPost", "totalPosts", "fetchMessages"],
       changeMethods: [
