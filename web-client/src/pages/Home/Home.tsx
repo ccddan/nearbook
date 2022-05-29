@@ -1,14 +1,20 @@
 import "./Home.css";
 import "regenerator-runtime/runtime";
 
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+  useResolvedPath,
+} from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { createPost, listPosts } from "../../nearbook";
 
 import { Navbar } from "../../components/Navbar";
 import { Notification } from "../../components/Notification";
 import { Post } from "./../../../../contract/assembly/models";
 import { PostsList } from "../../components/Posts";
+import { listPosts } from "../../nearbook";
 import { logout } from "./../../utils";
 
 let window: any = Window;
@@ -18,7 +24,11 @@ export function Home() {
   const navigate = useNavigate();
   const routeParams = useParams();
   console.log("Home params:", routeParams);
+  const currentLocation = useLocation();
+  console.log("currentLocation:", currentLocation);
+
   const displayNestedRouteContent = Object.keys(routeParams).length > 0;
+  const newPostPage = currentLocation.pathname.includes("posts/new");
 
   const [posts, setPosts] = useState<any[]>([]);
 
@@ -87,8 +97,10 @@ export function Home() {
   return (
     <>
       <Navbar onLogout={onLogoutHandler} />
-      {!!displayNestedRouteContent && <Outlet />}
-      {!displayNestedRouteContent && <PostsList posts={posts} />}
+      {(!!displayNestedRouteContent || !!newPostPage) && <Outlet />}
+      {!displayNestedRouteContent && !newPostPage && (
+        <PostsList posts={posts} />
+      )}
       {/* <div className="mt-5">
         <main className="m-auto max-w-[25em]">
           <h1>
