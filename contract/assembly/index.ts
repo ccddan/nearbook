@@ -128,7 +128,7 @@ export function fetchMessages(
   let messages: Message[] = MESSAGES_BY_POST_ID.get(post, [])!;
 
   if (idx < messages.length) {
-    let end = idx + limit < POSTS.length ? idx + limit : POSTS.length;
+    let end = idx + limit < POSTS.length ? idx + limit : messages.length;
     return messages.slice(idx, end);
   }
 
