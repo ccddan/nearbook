@@ -14,12 +14,9 @@ export function createPost(payload: PostCreatePayload): Post {
   POST_OWNER.set(post.uuid, context.sender);
   logging.log("post's owner saved");
 
-  if (!POSTS_BY_ACCOUNT_ID.get(context.sender)) {
-    POSTS_BY_ACCOUNT_ID.set(context.sender, []);
-  }
+  const accountPosts = POSTS_BY_ACCOUNT_ID.get(context.sender, []);
 
   logging.log("updating account's posts");
-  const accountPosts = POSTS_BY_ACCOUNT_ID.get(context.sender);
   accountPosts!.push(post.uuid);
   POSTS_BY_ACCOUNT_ID.get(context.sender, accountPosts);
   logging.log("account's posts updated");
