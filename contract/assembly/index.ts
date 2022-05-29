@@ -114,8 +114,8 @@ export function createMessage(payload: MessageCreatePayload): Message {
 
   post.totalMessages = post.totalMessages + 1;
 
-  POSTS.set(post.uuid, post);
-  MESSAGES_BY_POST_ID.set(post.uuid, postMessages!);
+  POSTS.set(message.post, post);
+  MESSAGES_BY_POST_ID.set(message.post, postMessages!);
 
   return message;
 }
