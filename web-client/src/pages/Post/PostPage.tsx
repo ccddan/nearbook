@@ -4,11 +4,13 @@ import {
   RefreshIcon,
   ThumbDownIcon,
   ThumbUpIcon,
+  TrashIcon,
 } from "@heroicons/react/solid";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import {
   createMessage,
+  deletePost,
   dislikePost,
   fetchMessages,
   getPost,
@@ -24,6 +26,7 @@ import { marked } from "marked";
 let window: any = Window;
 
 export const PostPage = () => {
+  const navigation = useNavigate();
   const { uuid } = useParams();
   console.log("PostPage::uuid - ", uuid);
 
@@ -37,7 +40,7 @@ export const PostPage = () => {
   // Loaders
   const [likingPost, setLikingPost] = useState(false);
   const [dislikingPost, setDislikingPost] = useState(false);
-  const [addingComment, setAddingComment] = useState(false);
+  const [deletingPost, setDeletingPost] = useState(false);
 
   useEffect(() => {
     if (uuid && !post && window.walletConnection.isSignedIn()) {
@@ -101,6 +104,19 @@ export const PostPage = () => {
     });
   };
 
+  const onDeletePostHandler = async () => {
+    try {
+      setDeletingPost(true);
+      if (await deletePost(post.uuid)) {
+        navigation("/posts");
+      }
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    } finally {
+      setDeletingPost(false);
+    }
+  };
+
   return (
     <div className="container block overflow-hidden m-auto py-5">
       <p className="pb-10 text-shadow">
@@ -145,7 +161,7 @@ export const PostPage = () => {
                 className="px-5 py-3 font-medium border rounded-l-md flex items-center hover:bg-secondary"
                 type="button"
                 onClick={likePostHandler}
-                disabled={likingPost}
+                disabled={likingPost || deletingPost}
               >
                 {!likingPost && (
                   <>
@@ -166,7 +182,7 @@ export const PostPage = () => {
                 className="px-5 py-3 font-medium border flex items-center hover:bg-secondary"
                 type="button"
                 onClick={dislikePostHandler}
-                disabled={dislikingPost}
+                disabled={dislikingPost || deletingPost}
               >
                 {!dislikingPost && (
                   <>
@@ -188,10 +204,33 @@ export const PostPage = () => {
                 <span>{messagesCounter}</span>
               </div>
             </div>
+            {window.accountId === post.author && (
+              <div className="relative">
+                <button
+                  className="border rounded-full p-2 bg-error absolute right-0 -top-5 -translate-y-1/2"
+                  disabled={deletingPost}
+                  onClick={onDeletePostHandler}
+                >
+                  {!deletingPost && (
+                    <TrashIcon className="font-error" width={25} height={25} />
+                  )}
+                  {!!deletingPost && (
+                    <RefreshIcon
+                      width={22}
+                      height={22}
+                      className="loading-icon"
+                    />
+                  )}
+                </button>
+              </div>
+            )}
           </div>
           <hr className="max-w-[85%] m-auto" />
           <div className="container block overflow-hidden m-auto bg-dark pt-8 px-4">
-            <NewMessageForm onSubmitHandler={onCreateNewComment} />
+            <NewMessageForm
+              disabled={deletingPost}
+              onSubmitHandler={onCreateNewComment}
+            />
           </div>
           <PostMessagesList messages={messages} />
         </div>

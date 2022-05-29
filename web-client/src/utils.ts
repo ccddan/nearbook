@@ -27,7 +27,13 @@ export async function initContract() {
     nearConfig.contractName,
     {
       viewMethods: ["listPosts", "getPost", "totalPosts", "fetchMessages"],
-      changeMethods: ["createPost", "likePost", "dislikePost", "createMessage"],
+      changeMethods: [
+        "createPost",
+        "deletePost",
+        "likePost",
+        "dislikePost",
+        "createMessage",
+      ],
     }
   );
 }

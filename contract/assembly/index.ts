@@ -42,6 +42,29 @@ export function getPost(uuid: string): Post | null {
   return POSTS.get(uuid);
 }
 
+export function deletePost(uuid: string): bool {
+  if (POST_OWNER.get(uuid) != context.sender) {
+    throw new Error("Forbidden");
+  }
+
+  POST_OWNER.delete(uuid);
+
+  let accountPosts = POSTS_BY_ACCOUNT_ID.get(context.sender, []);
+  const idx = accountPosts!.indexOf(uuid);
+
+  if (idx != -1) {
+    accountPosts = accountPosts!.splice(idx, 1);
+  }
+
+  POSTS.delete(uuid);
+
+  if (MESSAGES_BY_POST_ID.get(uuid)) {
+    MESSAGES_BY_POST_ID.delete(uuid);
+  }
+
+  return true;
+}
+
 export function totalPosts(): u64 {
   return POSTS.length;
 }

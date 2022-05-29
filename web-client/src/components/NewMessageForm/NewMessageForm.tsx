@@ -3,6 +3,7 @@ import { CheckIcon, RefreshIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 
 interface NewMessageFormProps {
+  disabled: boolean;
   onSubmitHandler: (comment: string) => Promise<void>;
 }
 
@@ -23,6 +24,7 @@ export const NewMessageForm = (props: NewMessageFormProps) => {
         type="comment"
         placeholder="Leave a comment"
         value={comment}
+        disabled={sendingForm || props.disabled}
         onChange={(e: any) => {
           setComment(e.target.value);
         }}
@@ -31,7 +33,7 @@ export const NewMessageForm = (props: NewMessageFormProps) => {
       <button
         className="absolute p-2 text-white -translate-y-1/2 bg-secondary rounded-full top-1/2 right-4 w-[40px] h-[40px]"
         type="button"
-        disabled={sendingForm || comment.trim().length === 0}
+        disabled={sendingForm || comment.trim().length === 0 || props.disabled}
         onClick={() => {
           setSendingForm(true);
           props.onSubmitHandler(comment).then(() => {

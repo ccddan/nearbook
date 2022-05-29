@@ -19,6 +19,11 @@ export const createPost = async (
   return post;
 };
 
+export const deletePost = async (uuid: string) => {
+  console.log("Delete post by id:", uuid);
+  return await window.contract.deletePost({ uuid });
+};
+
 export const listPosts = async (start: number = 0, limit: number = 10) => {
   console.log("Listing all posts...");
   const posts = await window.contract.listPosts({ start, limit });
