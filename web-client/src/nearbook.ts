@@ -32,3 +32,11 @@ export const getPost = async (uuid: string) => {
   console.log("post:", post);
   return post;
 };
+
+export const likePost = async (uuid: string) => {
+  return await window.contract.likePost({ uuid });
+};
+
+export const dislikePost = async (uuid: string) => {
+  return await window.contract.dislikePost({ uuid });
+};

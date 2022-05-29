@@ -49,3 +49,25 @@ export function listPosts(idx: i32 = 0, limit: i32 = 10): Post[] {
 
   return result;
 }
+
+export function likePost(uuid: string): boolean {
+  const post = getPost(uuid);
+  if (!post) {
+    throw new Error("Not found");
+  }
+  post.likes = post.likes + 1;
+  POSTS.set(post.uuid, post);
+
+  return true;
+}
+
+export function dislikePost(uuid: string): boolean {
+  const post = getPost(uuid);
+  if (!post) {
+    throw new Error("Not found");
+  }
+  post.dislikes = post.dislikes + 1;
+  POSTS.set(post.uuid, post);
+
+  return true;
+}

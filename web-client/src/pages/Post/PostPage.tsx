@@ -2,15 +2,16 @@ import {
   AnnotationIcon,
   ArrowCircleLeftIcon,
   ArrowRightIcon,
+  RefreshIcon,
   ThumbDownIcon,
   ThumbUpIcon,
 } from "@heroicons/react/solid";
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { dislikePost, getPost, likePost } from "../../nearbook";
 
 import DOMPurify from "dompurify";
 import { Post } from "./../../../../contract/assembly/models";
-import { getPost } from "../../nearbook";
 import { marked } from "marked";
 
 let window: any = Window;
@@ -21,12 +22,21 @@ export const PostPage = () => {
 
   const [post, setPost] = useState<any>(null);
   const [parsedContent, setParsedContent] = useState("");
+  const [likesCounter, setLikesCounter] = useState(0);
+  const [dislikesCounter, setDislikesCounter] = useState(0);
+
+  // Loaders
+  const [likingPost, setLikingPost] = useState(false);
+  const [dislikingPost, setDislikingPost] = useState(false);
 
   useEffect(() => {
     if (uuid && window.walletConnection.isSignedIn()) {
       getPost(uuid).then((post: Post) => {
         console.log("post:", post);
         setPost(post);
+        setLikesCounter(parseInt(post.likes));
+        setDislikesCounter(parseInt(post.dislikes));
+
         DOMPurify.sanitize(
           marked.parse(post.content, (error: any, parseResult: string) => {
             setParsedContent(parseResult);
@@ -35,6 +45,29 @@ export const PostPage = () => {
       });
     }
   }, [uuid]);
+
+  const likePostHandler = async () => {
+    try {
+      setLikingPost(true);
+      console.log("Post has been liked:", await likePost(post.uuid));
+      setLikesCounter(likesCounter + 1);
+    } catch (error) {
+      console.error("Failed to like post:", error);
+    } finally {
+      setLikingPost(false);
+    }
+  };
+  const dislikePostHandler = async () => {
+    try {
+      setDislikingPost(true);
+      console.log("Post has been disliked:", await dislikePost(post.uuid));
+      setDislikesCounter(dislikesCounter + 1);
+    } catch (error) {
+      console.error("Failed to like post:", error);
+    } finally {
+      setDislikingPost(false);
+    }
+  };
 
   return (
     <div className="container block overflow-hidden m-auto py-5">
@@ -80,17 +113,43 @@ export const PostPage = () => {
               <button
                 className="px-5 py-3 font-medium border rounded-l-md flex items-center hover:bg-secondary"
                 type="button"
+                onClick={likePostHandler}
+                disabled={likingPost}
               >
-                <ThumbUpIcon className="mr-2" width={15} height={15} />
-                <span>{post.likes}</span>
+                {!likingPost && (
+                  <>
+                    <ThumbUpIcon className="mr-2" width={15} height={15} />
+                    <span>{likesCounter}</span>
+                  </>
+                )}
+                {!!likingPost && (
+                  <RefreshIcon
+                    width={19}
+                    height={19}
+                    className="loading-icon"
+                  />
+                )}
               </button>
 
               <button
                 className="px-5 py-3 font-medium border flex items-center hover:bg-secondary"
                 type="button"
+                onClick={dislikePostHandler}
+                disabled={dislikingPost}
               >
-                <ThumbDownIcon className="mr-2" width={15} height={15} />
-                <span>{post.dislikes}</span>
+                {!dislikingPost && (
+                  <>
+                    <ThumbDownIcon className="mr-2" width={15} height={15} />
+                    <span>{dislikesCounter}</span>
+                  </>
+                )}
+                {!!dislikingPost && (
+                  <RefreshIcon
+                    width={19}
+                    height={19}
+                    className="loading-icon"
+                  />
+                )}
               </button>
 
               <div className="px-5 py-3 font-medium border rounded-r-md flex items-center">
