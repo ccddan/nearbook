@@ -1,20 +1,26 @@
 import "./Home.css";
 import "regenerator-runtime/runtime";
 
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { createPost, listPosts } from "../../nearbook";
 
 import { Navbar } from "../../components/Navbar";
 import { Notification } from "../../components/Notification";
 import { Post } from "./../../../../contract/assembly/models";
+import { PostsList } from "../../components/Posts";
 import { logout } from "./../../utils";
-import { useNavigate } from "react-router-dom";
 
 let window: any = Window;
 
 export function Home() {
   console.log("Home");
   const navigate = useNavigate();
+  const routeParams = useParams();
+  console.log("Home params:", routeParams);
+  const displayNestedRouteContent = Object.keys(routeParams).length > 0;
+
+  const [posts, setPosts] = useState<any[]>([]);
 
   const [greeting, setGreeting] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -24,6 +30,7 @@ export function Home() {
     if (window.walletConnection.isSignedIn()) {
       listPosts().then((posts: Post[]) => {
         console.log("list of posts:", posts);
+        setPosts(posts);
       });
     } else {
       navigate("/");
@@ -80,7 +87,9 @@ export function Home() {
   return (
     <>
       <Navbar onLogout={onLogoutHandler} />
-      <div className="mt-5">
+      {!!displayNestedRouteContent && <Outlet />}
+      {!displayNestedRouteContent && <PostsList posts={posts} />}
+      {/* <div className="mt-5">
         <main className="m-auto max-w-[25em]">
           <h1>
             Greeting:{" "}
@@ -136,7 +145,7 @@ export function Home() {
           </p>
         </main>
         {showNotification && <Notification />}
-      </div>
+      </div> */}
     </>
   );
 }
