@@ -15,7 +15,7 @@ export function LoginPage() {
     const fn = () => {
       if (window.walletConnection.isSignedIn()) {
         console.log("login: already signed in");
-        navigate("/home");
+        navigate("/posts");
         return <></>;
       }
     };
@@ -25,7 +25,7 @@ export function LoginPage() {
 
   const checkLoginStatus = () => {
     if (window.walletConnection.isSignedIn()) {
-      navigate("/home");
+      navigate("/posts");
       return <></>;
     }
   };

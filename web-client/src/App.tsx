@@ -13,7 +13,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/home" element={<Home />}>
+        <Route path="/posts" element={<Home />}>
           <Route path=":uuid" element={<PostPage />} />
         </Route>
         <Route path="*" element={<NoPage />} />
