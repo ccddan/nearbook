@@ -38,6 +38,8 @@ export const getPost = async (uuid: string) => {
   return post;
 };
 
+export const getTotalPosts = async () => window.contract.totalPosts();
+
 export const likePost = async (uuid: string) => {
   return await window.contract.likePost({ uuid });
 };
