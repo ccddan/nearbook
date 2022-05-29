@@ -96,7 +96,7 @@ export const PostPage = () => {
               <p className="text-md text-gray-500 mb-10">
                 by <b className="color-primary">{post.author}</b>,{" "}
                 <span className="text-sm">
-                  {new Date(+post.createdAt / 1000).toString()}
+                  {new Date(+post.createdAt / 1000000).toString()}
                 </span>
               </p>
 
