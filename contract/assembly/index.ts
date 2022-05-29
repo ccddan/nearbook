@@ -43,7 +43,7 @@ export function getPost(uuid: string): Post | null {
 }
 
 export function totalPosts(): u64 {
-  return POSTS.values().length;
+  return POSTS.length;
 }
 
 export function listPosts(idx: i32 = 0, limit: i32 = 10): Post[] {
