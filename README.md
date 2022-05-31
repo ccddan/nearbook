@@ -9,11 +9,11 @@ For usage details, please follow instructions on:
 
 ## Demo App
 
-<b>!! IMPORTANT !!</b></span> for some reason the NEAR SDK is failing to connect to the smart contract using GitHub pages (you can see the error in the image `web-client/nearbook-deployment-failing-to-connect-rpc.png`).
+<span style="color: red;"><b>!! IMPORTANT !!</b></span> for some reason the NEAR SDK is failing to connect to the smart contract using GitHub pages (you can see the error in the image `web-client/nearbook-deployment-failing-to-connect-rpc.png`).
 
 The smart contract has been deployed and is called [nearbook.ccdev.testnet](https://explorer.testnet.near.org/accounts/nearbook.ccdev.testnet).
 
-The demo app has been published here: [ccddan.github.io/nearbook/](https://ccddan.github.io/nearbook/). <span style="color: red;">
+The demo app has been published here: [ccddan.github.io/nearbook/](https://ccddan.github.io/nearbook/) (not working due to RPC connection error, see **Workaround** section).
 
 ### Workaround
 
