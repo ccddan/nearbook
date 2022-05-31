@@ -1,6 +1,6 @@
 import "regenerator-runtime/runtime";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 import { Home } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
@@ -11,7 +11,7 @@ import React from "react";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/posts" element={<Home />}>
@@ -20,6 +20,6 @@ export default function App() {
         </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
