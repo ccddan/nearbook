@@ -26,7 +26,7 @@ export const Navbar = (props: NvabarProps) => {
           </div> */}
 
           {/* Logout Button */}
-          <div className="space-x-6 hidden md:flex">
+          <div className="space-x-6 flex">
             <h1 className="p-0 m-0 pt-[6px]">
               Welcome{" "}
               <label className="color-primary font-bold">
