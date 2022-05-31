@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/nearbook/static/css/main.b016211a.css",
-    "main.js": "/nearbook/static/js/main.b249790e.js",
+    "main.js": "/nearbook/static/js/main.a99e168c.js",
     "index.html": "/nearbook/index.html",
     "main.b016211a.css.map": "/nearbook/static/css/main.b016211a.css.map",
-    "main.b249790e.js.map": "/nearbook/static/js/main.b249790e.js.map"
+    "main.a99e168c.js.map": "/nearbook/static/js/main.a99e168c.js.map"
   },
   "entrypoints": [
     "static/css/main.b016211a.css",
-    "static/js/main.b249790e.js"
+    "static/js/main.a99e168c.js"
   ]
 }
