@@ -14,7 +14,7 @@ The demo app has been published here: [ccddan.github.io/nearbook/](https://ccdda
 ### Workaround
 
 1. Clone the repo
-2. cd into `contracts` and install dependencies with `npm install`
+2. cd into `contract` and install dependencies with `npm install`
 3. Now go back to root and cd into `web-client` and install dependencies with `npm install`
 4. Create `.env` file by running `cp .example.env .env`
 5. Inside `.env` file, set the content as `REACT_APP_CONTRACT_NAME=nearbook.ccdev.testnet`
