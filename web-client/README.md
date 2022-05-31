@@ -1,46 +1,80 @@
 # NEARBook - Social Media Platform - Web Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Web client for the unstoppable, censorship resistant and decentralized social media platform, NEARBook.
 
-## Available Scripts
+# Quick Start
 
-In the project directory, you can run:
+To run this project locally:
 
-### `npm start`
+1. Prerequisites: Make sure you've installed [Node.js] ≥ 12
+2. Install dependencies: `npm install`
+3. Run the local development server: `npm run dev` (see `package.json` for a
+   full list of `scripts` you can run with `npm`)
+4. Visit `localhost:3000`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Now you'll have a local development environment backed by the NEAR TestNet!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# Exploring The Code
 
-### `npm test`
+1. This client depends on some data types defined in the [contract](./../contract//assembly/models.ts) folder.
+2. The frontend code lives in the `src` folder.
+3. Utility functions to interacts with NEAR Testnet Blockchain can be found at `src/utils.ts` and `src/nearbook.ts`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Deploy
 
-### `npm run build`
+Every smart contract in NEAR has its [own associated account][near accounts]. When you run `npm run dev`, your smart contract gets deployed to the live NEAR TestNet with a throwaway account. When you're ready to make it permanent, here's how.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Step 0: Install near-cli
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The cli is installed automatically when you run `npm install`. Optionally you can install it globally with:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    yarn install --global near-cli
 
-### `npm run eject`
+Or, if you'd rather use the locally-installed version, you can prefix all `near` commands with `npx` (preferred approach used in this docs)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Ensure that it's installed with `npx near --version`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Step 1: Create an account for the contract
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Each account on NEAR can have at most one contract deployed to it. If you've already created an account such as `your-name.testnet`, you can deploy your contract to `nearbook.your-name.testnet`. Assuming you've already created an account on [NEAR Wallet], here's how to create `nearbook.your-name.testnet`:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Authorize NEAR CLI, following the commands it gives you:
 
-## Learn More
+   ```bash
+   $ npx near login
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Create a subaccount (replace `YOUR-NAME` below with your actual account name):
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   $ npx near create-account nearbook.YOUR-NAME.testnet --masterAccount YOUR-NAME.testnet --initialBalance 3
+   ```
+
+3. Build and deploy smart contract:
+
+   ```bash
+   $ npm run build:contract:debug
+   $ npx near deploy --accountId nearbook.YOUR-NAME.testnet --wasmFile ../contract/build/debug/nearbook-contracts.wasm
+   ```
+
+## Step 2: prepare required env vars
+
+Create a local `.env` file at the web-client's root directory, use `.example.env` as a reference.
+
+## Step 3: deploy!
+
+Deploy web client from your machine with:
+
+    ```bash
+    $ npm run start
+    ```
+
+Your browser should open up at `localhost:3000` automatically. Look at `package.json` for more available commands that you can use.
+
+## Step 4: Clean up
+
+Once you stop your application from running, you can clean up the account and the smart contracts that were deploy, execute the following command:
+
+    ```bash
+    $ npx near delete nearbook.YOUR-NAME.testnet YOUR-NAME.testnet
+    ```
