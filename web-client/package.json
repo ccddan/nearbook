@@ -1,7 +1,8 @@
 {
   "name": "web-client",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "https://ccddan.github.io/nearbook/",
   "scripts": {
     "build": "npm run build:contract && npm run build:web",
     "build:contract": "cd .. && node contract/compile.js",
@@ -9,13 +10,15 @@
     "build:web": "react-scripts build",
     "dev:deploy:contract": "cd .. && near dev-deploy",
     "deploy:contract": "cd .. && near deploy",
-    "deploy": "npm run build && npm run deploy:contract",
+    "deploy:dev": "npm run build && npm run deploy:contract",
     "prestart": "npm run build:contract:debug && npm run dev:deploy:contract",
     "start": "echo The app is starting! It will automatically open in your browser when ready && react-scripts start",
     "dev:start": "cp ../neardev/dev-account.env ./.near.env && replace-in-files --string='CONTRACT_NAME' --replacement='REACT_APP_CONTRACT_NAME' .near.env && env-cmd -f ./.near.env react-scripts start",
     "dev": "nodemon --watch ../contract -e ts --exec \"npm run dev:start\"",
     "test": "npm run build:contract:debug && cd contract && npm run test && cd .. && react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build:web",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/dompurify": "^2.3.3",
@@ -24,6 +27,7 @@
     "autoprefixer": "^10.4.7",
     "buffer": "^6.0.3",
     "env-cmd": "~10.1.0",
+    "gh-pages": "^4.0.0",
     "jest": "26.6.0",
     "jest-environment-node": "26.6.0",
     "near-cli": "~2.1.1",
