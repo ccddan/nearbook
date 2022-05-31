@@ -13,10 +13,11 @@ The demo app has been published here: [ccddan.github.io/nearbook/](https://ccdda
 
 ### Workaround
 
-1. Clone the repo and cd into `web-client`
-2. Install dependencies with `npm install`
-3. Create `.env` file by running `cp .example.env .env`
-4. Inside `.env` file, set the content as `REACT_APP_CONTRACT_NAME=nearbook.ccdev.testnet`
-5. Run the web client locally with `npm run start`
-6. Visit `localhost:3000` and login with your NEAR wallet
-7. Enjoy the posts, like, dislike, comment and create you own posts!!
+1. Clone the repo
+2. cd into `contracts` and install dependencies with `npm install`
+3. Now go back to root and cd into `web-client` and install dependencies with `npm install`
+4. Create `.env` file by running `cp .example.env .env`
+5. Inside `.env` file, set the content as `REACT_APP_CONTRACT_NAME=nearbook.ccdev.testnet`
+6. Run the web client locally with `npm run start`
+7. Visit `localhost:3000` and login with your NEAR wallet
+8. Enjoy the posts, like, dislike, comment and create you own posts!!
