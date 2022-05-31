@@ -2,14 +2,14 @@
 
 The unstoppable, censorship resistant and decentralized social media platform. As it had to have been since the beginning.
 
-For usage instructions, please follow instruction on:
+For usage details, please follow instructions on:
 
-1. [Smart Contracts](./contract/README.md)
-1. [Web Client](./web-client/README.md)
+- [Smart Contracts](./contract/README.md)
+- [Web Client](./web-client/README.md)
 
 ## Demo App
 
-The demo app has been published here: [ccddan.github.io/nearbook/](https://ccddan.github.io/nearbook/). <span style="color: red;"><b>!! BUT !!</b></span> for some reason the NEAR SDK is failing to connect to the smart contract (you can see the error in the image `./nearbook-deployment-failing-to-connect-rpc.png`). The smart contract has been deploy and is called [nearbook.ccdev.testnet](https://explorer.testnet.near.org/accounts/nearbook.ccdev.testnet).
+The demo app has been published here: [ccddan.github.io/nearbook/](https://ccddan.github.io/nearbook/). <span style="color: red;"><b>!! BUT !!</b></span> for some reason the NEAR SDK is failing to connect to the smart contract (you can see the error in the image `./nearbook-deployment-failing-to-connect-rpc.png`). The smart contract has been deployed and is called [nearbook.ccdev.testnet](https://explorer.testnet.near.org/accounts/nearbook.ccdev.testnet).
 
 ### Workaround
 
