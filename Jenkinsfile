@@ -23,17 +23,21 @@ pipeline {
   stages {
     stage("Checkout") {
       steps {
-        git url: 'https://github.com/ccddan/nearbook.git', branch: 'main'
+        container('node') {
+          git url: 'https://github.com/ccddan/nearbook.git', branch: 'main'
+        }
       }
     }
 
     stage("Install Dependencies") {
       steps {
-        dir ('contract') {
-          sh 'npm install'
-        }
-        dir ('web-client') {
-          sh 'npm install'
+        container('node') {
+          dir ('contract') {
+            sh 'npm install'
+          }
+          dir ('web-client') {
+            sh 'npm install'
+          }
         }
       }
     }
