@@ -13,7 +13,7 @@ pipeline {
           image: node:alpine
           tty: true
           securityContext:
-            runAsUser: 0
+            runAsUser: 1000
             privileged: true
       '''
     }
