@@ -28,9 +28,11 @@ pipeline {
       steps {
         container('node') {
           dir ('contract') {
+            sh 'pwd'
             sh 'npm install'
           }
           dir ('web-client') {
+            sh 'pwd'
             sh 'npm install'
           }
         }
