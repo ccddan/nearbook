@@ -12,6 +12,7 @@ pipeline {
         - name: node
           image: node:alpine
           tty: true
+          workingDir: /home/nearbook
           securityContext:
             runAsUser: 0
             privileged: true
@@ -28,9 +29,11 @@ pipeline {
       steps {
         container('node') {
           dir ('contract') {
+            sh 'ls -las'
             sh 'npm install'
           }
           dir ('web-client') {
+            sh 'ls -las'
             sh 'npm install'
           }
         }
