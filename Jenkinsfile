@@ -31,10 +31,10 @@ pipeline {
           sh 'ls -last'
 
           dir ('contract') {
-            sh 'npm install --omit dev'
+            sh 'npm install'
           }
           dir ('web-client') {
-            sh 'npm install --omit dev'
+            sh 'npm install'
           }
         }
       }
