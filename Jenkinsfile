@@ -28,10 +28,10 @@ pipeline {
       steps {
         container('node') {
           dir ('contract') {
-            sh 'npm install'
+            sh 'npm install --omit dev'
           }
           dir ('web-client') {
-            sh 'npm install'
+            sh 'npm install --omit dev'
           }
         }
       }
