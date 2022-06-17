@@ -39,5 +39,18 @@ pipeline {
         }
       }
     }
+
+    stage("Unit Testing") {
+      steps {
+        container('node') {
+          dir ('contract') {
+            sh 'npm test'
+          }
+          dir ('web-client') {
+            sh 'npm test'
+          }
+        }
+      }
+    }
   }
 }
