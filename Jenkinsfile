@@ -12,6 +12,8 @@ pipeline {
         - name: node
           image: node:alpine
           tty: true
+          securityContext:
+            privileged: true
       '''
     }
   }
