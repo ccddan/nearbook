@@ -27,6 +27,9 @@ pipeline {
     stage("Install Dependencies") {
       steps {
         container('node') {
+          sh 'pwd'
+          sh 'ls -last'
+
           dir ('contract') {
             sh 'npm install --omit dev'
           }
