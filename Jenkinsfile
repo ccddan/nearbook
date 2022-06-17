@@ -16,6 +16,10 @@ pipeline {
     }
   }
 
+  tools {
+    git 'Default'
+  }
+
   stages {
     stage("Checkout") {
       steps {
