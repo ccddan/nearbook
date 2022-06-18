@@ -47,7 +47,7 @@ pipeline {
             sh 'npm test'
           }
           dir ('web-client') {
-            sh 'npm test'
+            sh 'REACT_APP_CONTRACT_NAME=testing CI=true npm test'
           }
         }
       }
