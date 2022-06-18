@@ -16,7 +16,7 @@
     "dev:start": "cp ../neardev/dev-account.env ./.near.env && replace-in-files --string='CONTRACT_NAME' --replacement='REACT_APP_CONTRACT_NAME' .near.env && env-cmd -f ./.near.env react-scripts start",
     "dev": "nodemon --watch ../contract -e ts --exec \"npm run dev:start\"",
     "test:contract": "npm run build:contract:debug && cd ../contract && npm run test",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "predeploy": "npm run build:web",
     "deploy": "gh-pages -d build"
