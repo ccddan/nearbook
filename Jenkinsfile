@@ -10,7 +10,7 @@ pipeline {
       spec:
         containers:
         - name: node
-          image: node:alpine
+          image: 14.19.3-alpine
           tty: true
           securityContext:
             runAsUser: 1000
