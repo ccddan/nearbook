@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:contract && npm run build:web",
     "build:contract": "cd .. && node contract/compile.js",
-    "build:contract:debug": "cd .. && node contract/compile.js --debug",
+    "build:contract:debug": "cd ../contract && node compile.js --debug",
     "build:web": "react-scripts build",
     "dev:deploy:contract": "cd .. && near dev-deploy",
     "deploy:contract": "cd .. && near deploy",
@@ -15,7 +15,8 @@
     "start": "echo The app is starting! It will automatically open in your browser when ready && react-scripts start",
     "dev:start": "cp ../neardev/dev-account.env ./.near.env && replace-in-files --string='CONTRACT_NAME' --replacement='REACT_APP_CONTRACT_NAME' .near.env && env-cmd -f ./.near.env react-scripts start",
     "dev": "nodemon --watch ../contract -e ts --exec \"npm run dev:start\"",
-    "test": "npm run build:contract:debug && cd contract && npm run test && cd .. && react-scripts test",
+    "test:contract": "npm run build:contract:debug && cd ../contract && npm run test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build:web",
     "deploy": "gh-pages -d build"
