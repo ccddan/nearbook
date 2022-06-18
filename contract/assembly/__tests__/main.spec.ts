@@ -1,9 +1,20 @@
-import { setGreeting } from '..'
-import { storage, Context } from 'near-sdk-as'
+import {
+  fetchMessages,
+  getPost,
+  listPosts,
+  totalPosts,
+} from '../index';
 
-describe('Greeting ', () => {
-  it('should be set and read', () => {
-    setGreeting('hello world')
-    storage.get<string>(Context.sender)
-  })
+describe('Posts::initial', () => {
+  it('should be empty', () => {
+    expect(getPost('uuid')).toBeNull();
+    expect(totalPosts()).toBe(0);
+    expect(listPosts()).toHaveLength(0);
+  });
+});
+
+describe('Messages::initial', () => {
+  it('should be empty', () => {
+    expect(fetchMessages("uuid")).toHaveLength(0);
+  });
 })
