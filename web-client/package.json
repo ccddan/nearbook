@@ -11,7 +11,7 @@
     "dev:deploy:contract": "cd .. && near dev-deploy",
     "deploy:contract": "cd .. && near deploy",
     "deploy:dev": "npm run build && npm run deploy:contract",
-    "prestart": "npm run build:contract:debug && npm run dev:deploy:contract",
+    "prestart": "npm run build:contract:debug",
     "start": "echo The app is starting! It will automatically open in your browser when ready && react-scripts start",
     "dev:start": "cp ../neardev/dev-account.env ./.near.env && replace-in-files --string='CONTRACT_NAME' --replacement='REACT_APP_CONTRACT_NAME' .near.env && env-cmd -f ./.near.env react-scripts start",
     "dev": "nodemon --watch ../contract -e ts --exec \"npm run dev:start\"",
