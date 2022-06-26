@@ -1,26 +1,24 @@
 import {
-  context,
-  logging,
-} from 'near-sdk-as';
-
+  MESSAGES_BY_POST_ID,
+  POSTS,
+  POSTS_BY_ACCOUNT_ID,
+  POST_OWNER,
+} from "./store";
 import {
   Message,
   MessageCreatePayload,
   Post,
   PostCreatePayload,
-} from './models';
-import {
-  MESSAGES_BY_POST_ID,
-  POST_OWNER,
-  POSTS,
-  POSTS_BY_ACCOUNT_ID,
-} from './store';
+} from "./models";
+import { context, logging } from "near-sdk-as";
 
 export function createPost(payload: PostCreatePayload): Post {
   let post = new Post(payload);
 
   logging.log("validate if post uuid exists");
-  assert(!POST_OWNER.get(post.uuid), "Post already exists");
+  if (POST_OWNER.get(post.uuid)) {
+    throw new Error("Post already exists");
+  }
 
   logging.log("storing new post's owner");
   POST_OWNER.set(post.uuid, context.sender);
@@ -45,7 +43,9 @@ export function getPost(uuid: string): Post | null {
 }
 
 export function deletePost(uuid: string): bool {
-  assert(POST_OWNER.get(uuid) == context.sender, "Forbidden");
+  if (POST_OWNER.get(uuid) != context.sender) {
+    throw new Error("Forbidden");
+  }
 
   POST_OWNER.delete(uuid);
 
@@ -82,7 +82,9 @@ export function listPosts(idx: i32 = 0, limit: i32 = 10): Post[] {
 
 export function likePost(uuid: string): boolean {
   const post = getPost(uuid);
-  assert(post, "Not found");
+  if (!post) {
+    throw new Error("Not found");
+  }
   post.likes = post.likes + 1;
   POSTS.set(post.uuid, post);
 
@@ -91,7 +93,9 @@ export function likePost(uuid: string): boolean {
 
 export function dislikePost(uuid: string): boolean {
   const post = getPost(uuid);
-  assert(post, "Not found");
+  if (!post) {
+    throw new Error("Not found");
+  }
   post.dislikes = post.dislikes + 1;
   POSTS.set(post.uuid, post);
 
@@ -100,7 +104,9 @@ export function dislikePost(uuid: string): boolean {
 
 export function createMessage(payload: MessageCreatePayload): Message {
   const post = getPost(payload.post);
-  assert(post, "Not found");
+  if (!post) {
+    throw new Error("Post not found");
+  }
   const message = new Message(payload);
 
   const postMessages = MESSAGES_BY_POST_ID.get(message.post, []);
