@@ -83,8 +83,8 @@ export function listPosts(idx: i32 = 0, limit: i32 = 10): Post[] {
 export function likePost(uuid: string): boolean {
   const post = getPost(uuid);
   assert(post, "Not found");
-  post.likes = post.likes + 1;
-  POSTS.set(post.uuid, post);
+  post!.likes = post!.likes + 1;
+  POSTS.set(post!.uuid, post!);
 
   return true;
 }
@@ -92,8 +92,8 @@ export function likePost(uuid: string): boolean {
 export function dislikePost(uuid: string): boolean {
   const post = getPost(uuid);
   assert(post, "Not found");
-  post.dislikes = post.dislikes + 1;
-  POSTS.set(post.uuid, post);
+  post!.dislikes = post!.dislikes + 1;
+  POSTS.set(post!.uuid, post!);
 
   return true;
 }
@@ -106,9 +106,9 @@ export function createMessage(payload: MessageCreatePayload): Message {
   const postMessages = MESSAGES_BY_POST_ID.get(message.post, []);
   postMessages!.push(message);
 
-  post.totalMessages = post.totalMessages + 1;
+  post!.totalMessages = post!.totalMessages + 1;
 
-  POSTS.set(message.post, post);
+  POSTS.set(message.post, post!);
   MESSAGES_BY_POST_ID.set(message.post, postMessages!);
 
   return message;
